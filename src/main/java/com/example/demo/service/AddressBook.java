@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 import com.example.demo.model.Contact;
@@ -120,5 +121,14 @@ public class AddressBook {
         );
 
         System.out.println("Contacts sorted successfully.");
+    }
+
+    public void sortByCityStateZip() {
+        contactList.stream()
+                .sorted(Comparator
+                        .comparing(Contact::getCity)
+                        .thenComparing(Contact::getState)
+                        .thenComparing(Contact::getZip))
+                .forEach(System.out::println);
     }
 }

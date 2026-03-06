@@ -43,7 +43,8 @@ public class AddressBookApplication {
 					System.out.println("3 Delete Contact");
 					System.out.println("4 Display Contacts");
 					System.out.println("5 Sort Contacts By Name");
-					System.out.println("6 Exit");
+					System.out.println("6 Sort Contacts By City, State and Zip");
+					System.out.println("7 Exit");
 
 					int option = sc.nextInt();
 					sc.nextLine();
@@ -73,6 +74,10 @@ public class AddressBookApplication {
 					}
 
 					else if (option == 6) {
+						book.sortByCityStateZip();
+						book.displayContacts();
+					}
+					else if(option == 7 ){
 						break;
 					}
 				}
