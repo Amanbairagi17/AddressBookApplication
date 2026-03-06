@@ -18,6 +18,15 @@ public class AddressBook {
         System.out.println("Enter Last Name:");
         String lastName = sc.nextLine();
 
+        Contact newContact = new Contact();
+        newContact.setFirstName(firstName);
+        newContact.setLastName(lastName);
+
+        if (contactList.contains(newContact)) {
+            System.out.println("Contact already exists with name " + firstName + " " + lastName);
+            return;
+        }
+
         System.out.println("Enter Address:");
         String address = sc.nextLine();
 
