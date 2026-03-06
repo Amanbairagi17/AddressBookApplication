@@ -9,7 +9,7 @@ public class AddressBook {
     Scanner sc = new Scanner(System.in);
     ArrayList<Contact> contactList = new ArrayList<>();
 
-    public void addContact() {
+    public Contact addContact() {
 
 
         System.out.println("Enter First Name:");
@@ -24,7 +24,7 @@ public class AddressBook {
 
         if (contactList.contains(newContact)) {
             System.out.println("Contact already exists with name " + firstName + " " + lastName);
-            return;
+            return null;
         }
 
         System.out.println("Enter Address:");
@@ -50,6 +50,7 @@ public class AddressBook {
         contactList.add(contact);
 
         System.out.println("Contact added successfully!");
+        return contact;
     }
 
     public void editContact() {

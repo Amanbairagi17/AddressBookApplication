@@ -1,12 +1,14 @@
 package com.example.demo.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import com.example.demo.model.Contact;
+
+import java.util.*;
 
 
 public class AddressBookManager {
     Map<String, AddressBook> addressBooks = new HashMap<>();
+    Map<String, List<Contact>> cityPersonMap = new HashMap<>();
+    Map<String, List<Contact>> statePersonMap = new HashMap<>();
     Scanner sc = new Scanner(System.in);
 
     public void createAddressBook() {
@@ -39,10 +41,15 @@ public class AddressBookManager {
         System.out.println("Enter City:");
         String city = sc.nextLine();
 
-        addressBooks.values()
+
+        if(!cityPersonMap.containsKey(city) || cityPersonMap.get(city).size() == 0) {
+            System.out.println("No contact");
+            return;
+        }
+
+        cityPersonMap
+                .get(city)
                 .stream()
-                .flatMap(book -> book.getContacts().stream())
-                .filter(contact -> contact.getCity().equalsIgnoreCase(city))
                 .forEach(System.out::println);
     }
 
@@ -51,16 +58,29 @@ public class AddressBookManager {
         System.out.println("Enter State:");
         String state = sc.nextLine();
 
-        addressBooks.values()
+        if(!statePersonMap.containsKey(state) || statePersonMap.get(state).size() == 0) {
+            System.out.println("No contact");
+            return;
+        }
+
+        statePersonMap
+                .get(state)
                 .stream()
-                .flatMap(book -> book.getContacts().stream())
-                .filter(contact -> contact.getState().equalsIgnoreCase(state))
                 .forEach(System.out::println);
     }
 
     public void displayAddressBooks(){
+
         for (String book : addressBooks.keySet()){
-            System.out.println(book);
+            System.out.println(book );
         }
+    }
+
+    public void addToCityAndStateMap(Contact contact) {
+        if(!cityPersonMap.containsKey(contact.getCity())) cityPersonMap.put(contact.getCity(), new ArrayList<>());
+        cityPersonMap.get(contact.getCity()).add(contact);
+
+        if(!statePersonMap.containsKey(contact.getState())) statePersonMap.put(contact.getState(), new ArrayList<>());
+        statePersonMap.get(contact.getState()).add(contact);
     }
 }

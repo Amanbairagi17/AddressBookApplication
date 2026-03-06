@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.model.Contact;
 import com.example.demo.service.AddressBook;
 import com.example.demo.service.AddressBookManager;
 import org.springframework.boot.SpringApplication;
@@ -31,6 +32,7 @@ public class AddressBookApplication {
 				manager.createAddressBook();
 			}
 
+
 			else if (choice == 2) {
 				AddressBook book = manager.getAddressBook();
 				if (book == null) continue;
@@ -45,7 +47,12 @@ public class AddressBookApplication {
 					int option = sc.nextInt();
 					sc.nextLine();
 
-					if (option == 1) book.addContact();
+					if (option == 1) {
+						Contact contact = book.addContact();
+						if(contact != null){
+							manager.addToCityAndStateMap(contact);
+						}
+					}
 					else if (option == 2) book.editContact();
 					else if (option == 3) book.deleteContact();
 					else if (option == 4) book.displayContacts();
