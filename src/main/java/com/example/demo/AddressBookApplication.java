@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.service.AddressBook;
+import com.example.demo.service.AddressBookManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,27 +13,45 @@ public class AddressBookApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AddressBookApplication.class, args);
 		System.out.println("Welcome to Address Book Program");
-
-		AddressBook addressBook = new AddressBook();
 		Scanner sc = new Scanner(System.in);
+		AddressBookManager manager = new AddressBookManager();
 
 		while (true) {
-			System.out.println("1 Add Contact");
-			System.out.println("2 Edit Contact");
-			System.out.println("3 Delete Contact");
-			System.out.println("4 Display Contacts");
-			System.out.println("5 Exit");
+			System.out.println("1 Create Address Book");
+			System.out.println("2 Use Address Book");
+			System.out.println("3 Display Address Book");
+			System.out.println("4 Exit");
 
-			System.out.print("Enter your choice: ");
 			int choice = sc.nextInt();
 			sc.nextLine();
 
-			if (choice == 1) addressBook.addContact();
-			else if (choice == 2) addressBook.editContact();
-			else if (choice == 3) addressBook.deleteContact();
-			else if (choice == 4) addressBook.displayContacts();
-			else if (choice == 5) break;
-			else System.out.println("Invalid choice.");
+			if (choice == 1) {
+				manager.createAddressBook();
+			}
+
+			else if (choice == 2) {
+				AddressBook book = manager.getAddressBook();
+				if (book == null) continue;
+
+				while (true) {
+					System.out.println("1 Add Contact");
+					System.out.println("2 Edit Contact");
+					System.out.println("3 Delete Contact");
+					System.out.println("4 Display Contacts");
+					System.out.println("5 Exit");
+
+					int option = sc.nextInt();
+					sc.nextLine();
+
+					if (option == 1) book.addContact();
+					else if (option == 2) book.editContact();
+					else if (option == 3) book.deleteContact();
+					else if (option == 4) book.displayContacts();
+					else if (option == 5) break;
+				}
+			}
+			else if(choice == 3) manager.displayAddressBooks();
+			else if (choice == 4) break;
 		}
 	}
 
