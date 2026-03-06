@@ -20,7 +20,9 @@ public class AddressBookApplication {
 			System.out.println("1 Create Address Book");
 			System.out.println("2 Use Address Book");
 			System.out.println("3 Display Address Book");
-			System.out.println("4 Exit");
+			System.out.println("4 Search Person by City");
+			System.out.println("5 Search Person by State");
+			System.out.println("6 Exit");
 
 			int choice = sc.nextInt();
 			sc.nextLine();
@@ -51,7 +53,9 @@ public class AddressBookApplication {
 				}
 			}
 			else if(choice == 3) manager.displayAddressBooks();
-			else if (choice == 4) break;
+			else if(choice == 4) manager.searchByCity();
+			else if(choice == 5) manager.searchByState();
+			else if (choice == 6) break;
 		}
 	}
 
