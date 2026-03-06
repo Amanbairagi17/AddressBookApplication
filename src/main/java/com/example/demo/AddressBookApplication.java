@@ -14,7 +14,9 @@ public class AddressBookApplication {
 		AddressBook addressBook = new AddressBook();
 
 		addressBook.addContact();
+		addressBook.addContact();
 		addressBook.editContact();
+		addressBook.deleteContact();
 	}
 
 }
