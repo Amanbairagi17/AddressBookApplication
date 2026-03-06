@@ -113,4 +113,12 @@ public class AddressBook {
     public ArrayList<Contact> getContacts() {
         return contactList;
     }
+
+    public void sortContactsByName() {
+        contactList.sort((c1, c2) ->
+                c1.getFirstName().compareToIgnoreCase(c2.getFirstName())
+        );
+
+        System.out.println("Contacts sorted successfully.");
+    }
 }

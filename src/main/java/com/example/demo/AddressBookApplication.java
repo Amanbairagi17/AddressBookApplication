@@ -42,7 +42,8 @@ public class AddressBookApplication {
 					System.out.println("2 Edit Contact");
 					System.out.println("3 Delete Contact");
 					System.out.println("4 Display Contacts");
-					System.out.println("5 Exit");
+					System.out.println("5 Sort Contacts By Name");
+					System.out.println("6 Exit");
 
 					int option = sc.nextInt();
 					sc.nextLine();
@@ -66,7 +67,12 @@ public class AddressBookApplication {
 						book.displayContacts();
 					}
 
-					else if (option == 5) {
+					else if(option == 5) {
+						book.sortContactsByName();
+						book.displayContacts();
+					}
+
+					else if (option == 6) {
 						break;
 					}
 				}
