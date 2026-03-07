@@ -48,8 +48,11 @@ public class AddressBookApplication {
 					System.out.println("8 Read Contacts From File");
 					System.out.println("9 Write Contacts To CSV");
 					System.out.println("10 Read Contacts To CSV");
-					System.out.println("11 Exit");
+					System.out.println("11 Write Contacts To JSON");
+					System.out.println("12 Read Contacts From JSON");
+					System.out.println("13 Exit");
 
+					
 					int option = sc.nextInt();
 					sc.nextLine();
 
@@ -94,6 +97,12 @@ public class AddressBookApplication {
 						book.writeToFile();
 					}
 					else if(option == 11 ){
+						book.readFromJSON();;
+					}
+					else if (option == 12) {
+						book.writeToJSON();
+					}
+					else if (option == 13) {
 						break;
 					}
 				}
