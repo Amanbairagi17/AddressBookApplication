@@ -94,7 +94,7 @@ public class AddressBookApplication {
 						book.writeToCSV();;
 					}
 					else if (option == 10) {
-						book.writeToFile();
+						book.writeToCSV();
 					}
 					else if(option == 11 ){
 						book.readFromJSON();;
