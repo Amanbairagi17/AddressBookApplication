@@ -44,7 +44,9 @@ public class AddressBookApplication {
 					System.out.println("4 Display Contacts");
 					System.out.println("5 Sort Contacts By Name");
 					System.out.println("6 Sort Contacts By City, State and Zip");
-					System.out.println("7 Exit");
+					System.out.println("7 Write Contacts To File");
+					System.out.println("8 Read Contacts From File");
+					System.out.println("9 Exit");
 
 					int option = sc.nextInt();
 					sc.nextLine();
@@ -77,7 +79,13 @@ public class AddressBookApplication {
 						book.sortByCityStateZip();
 						book.displayContacts();
 					}
-					else if(option == 7 ){
+					else if(option == 7) {
+						book.writeToFile();
+					}
+					else if(option == 8){
+						book.readFromFile();
+					}
+					else if(option == 9 ){
 						break;
 					}
 				}

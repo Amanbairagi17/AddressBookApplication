@@ -1,5 +1,9 @@
 package com.example.demo.service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -130,5 +134,44 @@ public class AddressBook {
                         .thenComparing(Contact::getState)
                         .thenComparing(Contact::getZip))
                 .forEach(System.out::println);
+    }
+    
+    public void writeToFile() {
+        try {
+            FileWriter writer = new FileWriter("AddressBook.txt");
+            for (Contact contact : contactList) {
+
+                writer.write(contact.getFirstName() + "," +
+                        contact.getLastName() + "," +
+                        contact.getAddress() + "," +
+                        contact.getCity() + "," +
+                        contact.getState() + "," +
+                        contact.getZip() + "," +
+                        contact.getPhoneNumber() + "," +
+                        contact.getEmail());
+                writer.write("\n");
+            }
+
+            writer.close();
+            System.out.println("Contacts written to file successfully.");
+        } 
+        catch (IOException e) {
+            System.out.println("Error writing to file.");
+        }
+    }
+    
+    public void readFromFile() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("AddressBook.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            reader.close();
+        }
+        catch (IOException e) {
+            System.out.println("Error reading file.");
+        }
     }
 }
