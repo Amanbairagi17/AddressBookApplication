@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 import com.example.demo.model.Contact;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 public class AddressBook {
     ArrayList<Contact> contactList = new ArrayList<>();
@@ -172,6 +174,52 @@ public class AddressBook {
         }
         catch (IOException e) {
             System.out.println("Error reading file.");
+        }
+    }
+    
+    public void writeToCSV() {
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter("AddressBook.csv"));
+            for (Contact contact : contactList) {
+
+                String[] data = {
+                        contact.getFirstName(),
+                        contact.getLastName(),
+                        contact.getAddress(),
+                        contact.getCity(),
+                        contact.getState(),
+                        contact.getZip(),
+                        contact.getPhoneNumber(),
+                        contact.getEmail()
+                };
+
+                writer.writeNext(data);
+            }
+            writer.close();
+            System.out.println("Contacts written to CSV successfully.");
+
+        } 
+        catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
+    
+    public void readFromCSV() {
+        try {
+            CSVReader reader = new CSVReader(new FileReader("AddressBook.csv"));
+            String[] line;
+
+            while ((line = reader.readNext()) != null) {
+                for (String value : line) {
+                    System.out.print(value + " ");
+                }
+
+                System.out.println();
+            }
+            reader.close();
+        } 
+        catch (Exception e) {
+            System.out.println("Error");
         }
     }
 }
