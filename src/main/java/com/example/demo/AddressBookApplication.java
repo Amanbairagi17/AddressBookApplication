@@ -56,7 +56,9 @@ public class AddressBookApplication {
 					System.out.println("14 Retrieve from Database");
 					System.out.println("15 Update contacts on Database based on first and lastname");
 					System.out.println("16 Get contact by Date range");
-					System.out.println("17 Exit");
+					System.out.println("17 Get Contact By City From DB");
+					System.out.println("18 Get Contact By State From DB");
+					System.out.println("19 Exit");
 
 					
 					int option = sc.nextInt();
@@ -127,6 +129,22 @@ public class AddressBookApplication {
 	                    repository.getContactsByDateRange(startDate,endDate);
 					}
 					else if (option == 17) {
+						System.out.println("Enter city:");
+						String city = sc.nextLine();
+
+						int count = repository.getContactCountByCity(city);
+
+						System.out.println("Total contacts in city " +city + " : " + count);
+					}
+					else if (option == 18) {
+						System.out.println("Enter state:");
+						String state = sc.nextLine();
+
+						int count = repository.getContactCountByState(state);
+
+						System.out.println("Total contacts in state "+  state+ " : " + count);
+					}
+					else if (option == 19) {
 						break;
 					}
 				}

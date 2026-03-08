@@ -32,4 +32,24 @@ class AddressbookappApplicationTests {
 
         Assertions.assertTrue(contactFromMemory.equals(contactFromDB));
     }
+    
+    @Test
+    public void givenCity_WhenRetrieveContactCount_ShouldReturnCount() {
+
+        AddressBookRepository repo = new AddressBookRepository();
+
+        int count = repo.getContactCountByCity("Bhopal");
+
+        Assertions.assertTrue(count >= 0);
+    }
+    
+    @Test
+    public void givenState_WhenRetrieveContactCount_ShouldReturnCount() {
+
+        AddressBookRepository repo = new AddressBookRepository();
+
+        int count = repo.getContactCountByState("MP");
+
+        Assertions.assertTrue(count >= 0);
+    }
 }

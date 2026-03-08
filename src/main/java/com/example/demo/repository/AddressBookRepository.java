@@ -243,4 +243,59 @@ public class AddressBookRepository {
             e.printStackTrace();
         }
     }
+    
+    
+    public int getContactCountByCity(String city) {
+
+        int count = 0;
+
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            String query = "SELECT getContactsByCity(?)";
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, city);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+
+            connection.close();
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+    
+    public int getContactCountByState(String state) {
+
+        int count = 0;
+
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            String query = "SELECT getContactsByState(?)";
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, state);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+
+            connection.close();
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return count;
+    }
 }
