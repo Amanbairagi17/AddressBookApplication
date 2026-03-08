@@ -53,12 +53,14 @@ public class AddressBookApplication {
 					System.out.println("11 Write Contacts To JSON");
 					System.out.println("12 Read Contacts From JSON");
 					System.out.println("13 Add Contact To Database");
-					System.out.println("14 Retrieve from Database");
-					System.out.println("15 Update contacts on Database based on first and lastname");
-					System.out.println("16 Get contact by Date range");
-					System.out.println("17 Get Contact By City From DB");
-					System.out.println("18 Get Contact By State From DB");
-					System.out.println("19 Exit");
+					System.out.println("13 Add Contact To Database");
+					System.out.println("14 Add Contact To Database (Transaction)");
+					System.out.println("15 Retrieve from Database");
+					System.out.println("16 Update contacts on Database based on first and lastname");
+					System.out.println("17 Get contact by Date range");
+					System.out.println("18 Get Contact By City From DB");
+					System.out.println("19 Get Contact By State From DB");
+					System.out.println("20 Exit");
 
 					
 					int option = sc.nextInt();
@@ -114,12 +116,15 @@ public class AddressBookApplication {
 						repository.addContact();
 					}
 					else if (option == 14) {
-						repository.retrieveContacts();
+						repository.addContactWithTransaction();
 					}
 					else if (option == 15) {
-						repository.updateContact();;
+						repository.addContact();
 					}
 					else if (option == 16) {
+						repository.updateContact();;
+					}
+					else if (option == 17) {
 						System.out.println("Enter Start Date (yyyy-mm-dd):");
 	                    String startDate = sc.nextLine();
 
@@ -128,7 +133,7 @@ public class AddressBookApplication {
 
 	                    repository.getContactsByDateRange(startDate,endDate);
 					}
-					else if (option == 17) {
+					else if (option == 18) {
 						System.out.println("Enter city:");
 						String city = sc.nextLine();
 
@@ -136,7 +141,7 @@ public class AddressBookApplication {
 
 						System.out.println("Total contacts in city " +city + " : " + count);
 					}
-					else if (option == 18) {
+					else if (option == 19) {
 						System.out.println("Enter state:");
 						String state = sc.nextLine();
 
@@ -144,7 +149,7 @@ public class AddressBookApplication {
 
 						System.out.println("Total contacts in state "+  state+ " : " + count);
 					}
-					else if (option == 19) {
+					else if (option == 20) {
 						break;
 					}
 				}

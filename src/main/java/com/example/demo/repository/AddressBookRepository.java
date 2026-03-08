@@ -298,4 +298,86 @@ public class AddressBookRepository {
 
         return count;
     }
+    
+    
+    public void addContactWithTransaction() {
+
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            connection.setAutoCommit(false);
+
+            System.out.println("Enter First Name:");
+            String firstName = sc.nextLine();
+
+            System.out.println("Enter Last Name:");
+            String lastName = sc.nextLine();
+
+            System.out.println("Enter Address:");
+            String address = sc.nextLine();
+
+            System.out.println("Enter City:");
+            String city = sc.nextLine();
+
+            System.out.println("Enter State:");
+            String state = sc.nextLine();
+
+            System.out.println("Enter Zip:");
+            String zip = sc.nextLine();
+
+            System.out.println("Enter Phone Number:");
+            String phone = sc.nextLine();
+
+            System.out.println("Enter Email:");
+            String email = sc.nextLine();
+
+            System.out.println("Enter Contact Type (Friend/Family):");
+            String type = sc.nextLine();
+
+            // Insert Contact
+            String query = "INSERT INTO contacts(firstname,lastname,address,city,state,zip,phonenumber,email) VALUES (?,?,?,?,?,?,?,?)";
+
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, address);
+            stmt.setString(4, city);
+            stmt.setString(5, state);
+            stmt.setString(6, zip);
+            stmt.setString(7, phone);
+            stmt.setString(8, email);
+
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            int contactId = rs.getInt(1);
+
+            // Insert Contact Type
+            String typeQuery = "INSERT INTO contact_type(contact_id,type) VALUES (?,?)";
+
+            PreparedStatement typeStmt = connection.prepareStatement(typeQuery);
+
+            typeStmt.setInt(1, contactId);
+            typeStmt.setString(2, type);
+
+            typeStmt.executeUpdate();
+
+            connection.commit();
+
+            System.out.println("Contact added successfully.");
+
+        } catch (Exception e) {
+
+            try {
+                System.out.println("Transaction failed. Rolling back.");
+                DBConnection.getConnection().rollback();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            e.printStackTrace();
+        }
+    }
 }

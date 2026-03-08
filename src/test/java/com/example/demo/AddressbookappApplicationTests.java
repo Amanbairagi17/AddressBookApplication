@@ -28,7 +28,7 @@ class AddressbookappApplicationTests {
         Contact contactFromDB = repo.updateContact();
 
         Contact contactFromMemory =
-                repo.getContact("Kanha", "Vaishnav");
+                repo.getContact("Ram", "Bhai");
 
         Assertions.assertTrue(contactFromMemory.equals(contactFromDB));
     }
@@ -51,5 +51,15 @@ class AddressbookappApplicationTests {
         int count = repo.getContactCountByState("MP");
 
         Assertions.assertTrue(count >= 0);
+    }
+    
+    @Test
+    public void givenNewContact_WhenAdded_ShouldBeInserted() {
+
+        AddressBookRepository repo = new AddressBookRepository();
+
+        repo.addContactWithTransaction();
+
+        Assertions.assertTrue(repo.retrieveContacts() > 0);
     }
 }
