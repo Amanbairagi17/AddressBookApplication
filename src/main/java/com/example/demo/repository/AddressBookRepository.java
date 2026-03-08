@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Contact;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,5 +87,126 @@ public class AddressBookRepository {
             e.printStackTrace();
         }
         return 0;
+    }
+    
+    public Contact updateContact() {
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            System.out.println("Enter First Name:");
+            String firstName = sc.nextLine();
+
+            System.out.println("Enter Last Name:");
+            String lastName = sc.nextLine();
+
+            // find id basesd on the first and last name because we have to find id and id is a primary key
+            String findIdQuery = "SELECT id FROM contacts WHERE firstname=? AND lastname=?";
+            PreparedStatement findStmt = connection.prepareStatement(findIdQuery);
+            findStmt.setString(1, firstName);
+            findStmt.setString(2, lastName);
+
+            ResultSet rs = findStmt.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Contact not found.");
+                return null;
+            }
+
+            int id = rs.getInt("id");
+
+            //  take updated values
+            System.out.println("Enter new Address:");
+            String address = sc.nextLine();
+
+            System.out.println("Enter new City:");
+            String city = sc.nextLine();
+
+            System.out.println("Enter new State:");
+            String state = sc.nextLine();
+
+            System.out.println("Enter new Zip:");
+            String zip = sc.nextLine();
+
+            System.out.println("Enter new Phone Number:");
+            String phoneNumber = sc.nextLine();
+
+            System.out.println("Enter new Email:");
+            String email = sc.nextLine();
+
+            //  Update using ID
+            String updateQuery = "UPDATE contacts SET address=?, city=?, state=?, zip=?, phonenumber=?, email=? WHERE id=?";
+            PreparedStatement updateStmt = connection.prepareStatement(updateQuery);
+
+            updateStmt.setString(1, address);
+            updateStmt.setString(2, city);
+            updateStmt.setString(3, state);
+            updateStmt.setString(4, zip);
+            updateStmt.setString(5, phoneNumber);
+            updateStmt.setString(6, email);
+            updateStmt.setInt(7, id);
+
+            int rows = updateStmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Contact updated successfully.");
+
+                Contact contact = new Contact(
+                        firstName,
+                        lastName,
+                        address,
+                        city,
+                        state,
+                        zip,
+                        phoneNumber,
+                        email
+                );
+
+                connection.close();
+                return contact;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Contact getContact(String firstName, String lastName) {
+
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            String query = "SELECT * FROM contacts WHERE firstname=? AND lastname=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+
+                Contact contact = new Contact(
+                        rs.getString("firstname"),
+                        rs.getString("lastname"),
+                        rs.getString("address"),
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getString("zip"),
+                        rs.getString("phonenumber"),
+                        rs.getString("email")
+                );
+
+                connection.close();
+                return contact;
+            }
+
+            connection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
