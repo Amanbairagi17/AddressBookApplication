@@ -55,7 +55,8 @@ public class AddressBookApplication {
 					System.out.println("13 Add Contact To Database");
 					System.out.println("14 Retrieve from Database");
 					System.out.println("15 Update contacts on Database based on first and lastname");
-					System.out.println("16 Exit");
+					System.out.println("16 Get contact by Date range");
+					System.out.println("17 Exit");
 
 					
 					int option = sc.nextInt();
@@ -117,6 +118,15 @@ public class AddressBookApplication {
 						repository.updateContact();;
 					}
 					else if (option == 16) {
+						System.out.println("Enter Start Date (yyyy-mm-dd):");
+	                    String startDate = sc.nextLine();
+
+	                    System.out.println("Enter End Date (yyyy-mm-dd):");
+	                    String endDate = sc.nextLine();
+
+	                    repository.getContactsByDateRange(startDate,endDate);
+					}
+					else if (option == 17) {
 						break;
 					}
 				}

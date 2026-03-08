@@ -39,7 +39,7 @@ public class AddressBookRepository {
             System.out.println("Enter Email:");
             String email = sc.nextLine();
 
-            String query = "INSERT INTO contacts(firstName,lastName,address,city,state,zip,phonenumber,email) VALUES (?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO contacts(firstname,lastname,address,city,state,zip,phonenumber,email,date_added) VALUES (?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement statement = connection.prepareStatement(query);
 
@@ -51,6 +51,8 @@ public class AddressBookRepository {
             statement.setString(6, zip);
             statement.setString(7, phonenumber);
             statement.setString(8, email);
+
+            statement.setDate(9, new java.sql.Date(System.currentTimeMillis()));
 
             statement.executeUpdate();
             System.out.println("Contact added to database.");
@@ -208,5 +210,37 @@ public class AddressBookRepository {
         }
 
         return null;
+    }
+    
+    
+    public void getContactsByDateRange(String startDate, String endDate) {
+
+        try {
+            Connection connection = DBConnection.getConnection();
+
+            String query = "SELECT * FROM contacts WHERE date_added BETWEEN ? AND ?";
+
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setDate(1, java.sql.Date.valueOf(startDate));
+            statement.setDate(2, java.sql.Date.valueOf(endDate));
+
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+
+                System.out.println(
+                        rs.getString("firstname") + " " +
+                        rs.getString("lastname") + ", " +
+                        rs.getString("city") + ", " +
+                        rs.getDate("date_added")
+                );
+            }
+
+            connection.close();
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
