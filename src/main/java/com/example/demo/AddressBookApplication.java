@@ -7,6 +7,8 @@ import com.example.demo.service.AddressBookManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -60,7 +62,8 @@ public class AddressBookApplication {
 					System.out.println("17 Get contact by Date range");
 					System.out.println("18 Get Contact By City From DB");
 					System.out.println("19 Get Contact By State From DB");
-					System.out.println("20 Exit");
+					System.out.println("20 Add multiple Contacts with thred");
+					System.out.println("21 Exit");
 
 					
 					int option = sc.nextInt();
@@ -119,7 +122,7 @@ public class AddressBookApplication {
 						repository.addContactWithTransaction();
 					}
 					else if (option == 15) {
-						repository.addContact();
+						repository.retrieveContacts();
 					}
 					else if (option == 16) {
 						repository.updateContact();;
@@ -149,7 +152,16 @@ public class AddressBookApplication {
 
 						System.out.println("Total contacts in state "+  state+ " : " + count);
 					}
-					else if (option == 20) {
+					else if(option == 20){
+
+					    List<Contact> contacts = new ArrayList<>();
+
+					    contacts.add(new Contact("Mahaveer","Rathour","Indore","Indore","MP","452001","9999999999","aman@gmail.com"));
+					    contacts.add(new Contact("Raghunath","Vaishnav","Ujjain","Ujjain","MP","456001","8888888888","kanha@gmail.com"));
+
+					    repository.addMultipleContacts(contacts);
+					}
+					else if (option == 21) {
 						break;
 					}
 				}

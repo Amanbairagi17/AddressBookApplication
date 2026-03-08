@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -379,5 +380,51 @@ public class AddressBookRepository {
 
             e.printStackTrace();
         }
+        
     }
+    //Add multiple contacts with thread
+    public void addMultipleContacts(List<Contact> contacts) {
+
+        contacts.forEach(contact -> {
+
+            Thread thread = new Thread(() -> {
+
+                try {
+                    Connection connection = DBConnection.getConnection();
+                    connection.setAutoCommit(false);
+
+                    String query = "INSERT INTO contacts(firstname,lastname,address,city,state,zip,phonenumber,email,date_added) VALUES (?,?,?,?,?,?,?,?,?)";
+
+                    PreparedStatement stmt = connection.prepareStatement(query);
+
+                    stmt.setString(1, contact.getFirstName());
+                    stmt.setString(2, contact.getLastName());
+                    stmt.setString(3, contact.getAddress());
+                    stmt.setString(4, contact.getCity());
+                    stmt.setString(5, contact.getState());
+                    stmt.setString(6, contact.getZip());
+                    stmt.setString(7, contact.getPhoneNumber());
+                    stmt.setString(8, contact.getEmail());
+                    stmt.setDate(9, new java.sql.Date(System.currentTimeMillis()));
+
+
+                    stmt.executeUpdate();
+
+                    connection.commit();
+                    connection.close();
+
+                    System.out.println("Inserted: " + contact.getFirstName());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            });
+
+            thread.start();
+
+        });
+    }
+        
+    
 }
